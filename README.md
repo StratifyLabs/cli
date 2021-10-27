@@ -1,7 +1,11 @@
 # cli
 
-This is a command Line Tool Template Project.
+This is a command Line Tool Template Project. It includes Stratify Labs API libraries for basic tasks:
 
+- SysAPI
+- FsAPI
+- InetAPI
+- JsonAPI
 
 To build:
 

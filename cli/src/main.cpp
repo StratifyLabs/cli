@@ -19,6 +19,7 @@ int main(int argc, char *argv[]) {
   //open the root object -- closes on deconstruction
   printer::Printer::Object root_object(printer, "cli");
 
+
   printer.key("name", cli.get_name())
       .key("argCount", var::NumberString(cli.count()));
 

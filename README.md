@@ -2,10 +2,9 @@
 
 This is a command Line Tool Template Project. It includes Stratify Labs API libraries for basic tasks:
 
-- SysAPI
-- FsAPI
-- InetAPI
-- JsonAPI
+- FsAPI: Filesytem routines
+- InetAPI: Internet including secure sockets
+- JsonAPI: JSON file reading/writing
 
 To build:
 
@@ -23,4 +22,20 @@ To Run:
 ```
 cli
 cli --json
+```
+
+To Test:
+
+The project includes some simple example tests for the `cli` program as well as
+unit tests for SDK libraries.
+
+```bash
+cmake .. -DAPI_IS_TEST=ON -DJSON_API_IS_TEST=ON
+ninja test
+```
+
+To have the tests show the output, use:
+
+```bash
+ctest -VV
 ```

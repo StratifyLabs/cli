@@ -9,25 +9,38 @@ file(REMOVE_RECURSE ${DEPENDENCIES_DIRECTORY}/CMakeSDK)
 
 set(CMAKE_SDK_DIRECTORY ${DEPENDENCIES_DIRECTORY}/CMakeSDK)
 execute_process(
-        COMMAND git clone --branch main https://github.com/StratifyLabs/CMakeSDK.git
-	WORKING_DIRECTORY ${DEPENDENCIES_DIRECTORY}
-	)
+  COMMAND git clone --branch main https://github.com/StratifyLabs/CMakeSDK.git
+  WORKING_DIRECTORY ${DEPENDENCIES_DIRECTORY}
+)
 
-file(MAKE_DIRECTORY ${CMAKE_SDK_DIRECTORY}/cmake_link)
+option(IS_ARM_CROSS_COMPILE "Setup the system to cross compile to Stratify OS" OFF)
 
-if(NOT GENERATOR)
-	set(GENERATOR Ninja)
+if(IS_ARM_CROSS_COMPILE)
+  set(BUILD_DIR cmake_arm)
+  execute_process(
+    COMMAND cmake -DSDK_DIRECTORY=${SDK_DIRECTORY} -P ${DEPENDENCIES_DIRECTORY}/CMakeSDK/scripts/bootstrap.cmake
+  )
+else()
+  set(BUILD_DIR cmake_link)
+
+  file(MAKE_DIRECTORY ${CMAKE_SDK_DIRECTORY}/${BUILD_DIR})
+
+  if(NOT GENERATOR)
+    set(GENERATOR Ninja)
+  endif()
+
+  set(ENV{SOS_SDK_PATH} ${SDK_PATH})
+  execute_process(
+    COMMAND cmake .. -G${GENERATOR}
+    WORKING_DIRECTORY ${CMAKE_SDK_DIRECTORY}/${BUILD_DIR}
+  )
+
+  execute_process(
+    COMMAND cmake --build . --target install
+    WORKING_DIRECTORY ${CMAKE_SDK_DIRECTORY}/${BUILD_DIR}
+  )
+
+  file(MAKE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/${BUILD_DIR})
 endif()
 
-set(ENV{SOS_SDK_PATH} ${SDK_PATH})
-execute_process(
-	COMMAND cmake .. -G${GENERATOR}
-	WORKING_DIRECTORY ${CMAKE_SDK_DIRECTORY}/cmake_link
-	)
 
-execute_process(
-	COMMAND cmake --build . --target install
-	WORKING_DIRECTORY ${CMAKE_SDK_DIRECTORY}/cmake_link
-	)
-
-file(MAKE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/cmake_link)

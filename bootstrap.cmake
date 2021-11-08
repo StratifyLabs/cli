@@ -93,7 +93,7 @@ else()
       RESULT_VARIABLE TEST_OUTPUT_RESULT
     )
 
-    if(${TEST_OUTPUT_RESULT})
+    if(NOT ${TEST_OUTPUT_RESULT} EQUAL "0")
       message(FATAL_ERROR "Test failed to complete successfully")
     endif()
 

@@ -27,6 +27,15 @@ endmacro()
 
 include(CTest)
 
+option(SDK_IS_TEST "Enable all SDK API tests" OFF)
+message(STATUS "Enable all tests? " ${SDK_IS_TEST})
+if(SDK_IS_TEST)
+  message(STATUS "Enabling tests for Api, Inet, Json, and Crypto")
+  set(API_IS_TEST ON CACHE INTERNAL "Enable API Test")
+  set(INET_API_IS_TEST ON CACHE INTERNAL "Enable InetAPI Test")
+  set(JSON_API_IS_TEST ON CACHE INTERNAL "Enable JsonAPI Test")
+  set(CRYPTO_API_IS_TEST ON CACHE INTERNAL "Enable CryptoAPI Test")
+endif()
 
 set(SOS_CONFIG_PATH ${CMAKE_CURRENT_SOURCE_DIR}/config CACHE INTERNAL "StratifyOS config directory")
 set(LWIP_STRATIFYOS_PATH
@@ -52,16 +61,6 @@ sdk_add_subdirectory(InetAPI main)
 sdk_add_subdirectory(CryptoAPI main)
 sdk_add_subdirectory(CloudAPI main)
 
-option(SDK_IS_TEST "Enable all SDK API tests" OFF)
-
-message(STATUS "Enable all tests? " ${SDK_IS_TEST})
-if(${SDK_IS_TEST})
-  message(STATUS "Enabling tests for Api, Inet, Json, and Crypto")
-  set(API_IS_TEST ON CACHE INTERNAL "Enable API Test")
-  set(INET_API_IS_TEST ON CACHE INTERNAL "Enable InetAPI Test")
-  set(JSON_API_IS_TEST ON CACHE INTERNAL "Enable JsonAPI Test")
-  set(CRYPTO_API_IS_TEST ON CACHE INTERNAL "Enable CryptoAPI Test")
-endif()
 
 
 

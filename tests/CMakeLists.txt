@@ -1,7 +1,5 @@
 
-
-
-set(PROGRAM_NAME ${CMAKE_CURRENT_SOURCE_DIR}/../app/build_release_link/${PROJECT_NAME}_release_link.elf)
+set(PROGRAM_NAME ${CMAKE_CURRENT_SOURCE_DIR}/../${PROJECT_NAME}/build_release_link/${PROJECT_NAME}_release_link.elf)
 
 add_test(NAME ${PROJECT_NAME}_json
   COMMAND ${PROGRAM_NAME} --json

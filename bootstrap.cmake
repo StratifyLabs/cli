@@ -15,6 +15,10 @@ execute_process(
 
 option(IS_ARM_CROSS_COMPILE "Setup the system to cross compile to Stratify OS" OFF)
 
+# This is used on the CI server, but can be run locally as well
+# This is currently NOT used with IS_ARM_CROSS_COMPILE=ON
+option(IS_BUILD_AND_TEST "Build and run the API tests" OFF)
+
 if(IS_ARM_CROSS_COMPILE)
   set(BUILD_DIR cmake_arm)
   execute_process(
@@ -41,6 +45,34 @@ else()
   )
 
   file(MAKE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/${BUILD_DIR})
+
+  if(IS_BUILD_AND_TEST)
+    message(STATUS "Build and run API Tests")
+
+    execute_process(
+      COMMAND cmake .. -GNinja -DSDK_IS_TEST=ON
+      WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/${BUILD_DIR}
+    )
+
+    execute_process(
+      COMMAND cmake --build . --target all
+      WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/${BUILD_DIR}
+    )
+
+    execute_process(
+      COMMAND cmake --build . --target API_test
+      WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/${BUILD_DIR}
+    )
+
+    execute_process(
+      COMMAND ctest -VV
+      WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/${BUILD_DIR}
+    )
+  endif()
+endif()
+
+if(IS_BUILD_AND_TEST)
+
 endif()
 
 

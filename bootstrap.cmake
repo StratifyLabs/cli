@@ -27,6 +27,7 @@ if(IS_ARM_CROSS_COMPILE)
 else()
   set(BUILD_DIR cmake_link)
 
+  file(REMOVE_RECURSE ${CMAKE_SDK_DIRECTORY}/${BUILD_DIR})
   file(MAKE_DIRECTORY ${CMAKE_SDK_DIRECTORY}/${BUILD_DIR})
 
   if(NOT GENERATOR)
@@ -54,6 +55,7 @@ else()
     message(FATAL_ERROR "Failed to install CMakeSDK project")
   endif()
 
+  file(REMOVE_RECURSE ${CMAKE_CURRENT_SOURCE_DIR}/${BUILD_DIR})
   file(MAKE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/${BUILD_DIR})
 
   if(IS_BUILD_AND_TEST)

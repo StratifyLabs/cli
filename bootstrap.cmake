@@ -50,7 +50,7 @@ else()
     message(STATUS "Build and run API Tests")
 
     execute_process(
-      COMMAND cmake .. -GNinja -DSDK_IS_TEST=ON
+      COMMAND cmake .. -DSDK_IS_TEST=ON
       WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/${BUILD_DIR}
     )
 

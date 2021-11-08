@@ -50,17 +50,17 @@ else()
     message(STATUS "Build and run API Tests")
 
     execute_process(
-      COMMAND cmake .. -DSDK_IS_TEST=ON
+      COMMAND cmake -DSDK_IS_TEST=ON ..
       WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/${BUILD_DIR}
     )
 
     execute_process(
-      COMMAND cmake --build . --target all
+      COMMAND cmake --build . --target all -- -j8
       WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/${BUILD_DIR}
     )
 
     execute_process(
-      COMMAND cmake --build . --target API_test
+      COMMAND cmake --build . --target API_test -- -j8
       WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/${BUILD_DIR}
     )
 

@@ -30,7 +30,7 @@ else()
   file(MAKE_DIRECTORY ${CMAKE_SDK_DIRECTORY}/${BUILD_DIR})
 
   if(NOT GENERATOR)
-    set(GENERATOR Ninja)
+    set(GENERATOR "Unix Makefiles")
   endif()
 
   set(ENV{SOS_SDK_PATH} ${SDK_PATH})

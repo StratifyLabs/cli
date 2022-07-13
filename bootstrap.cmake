@@ -17,13 +17,11 @@ option(IS_ARM_CROSS_COMPILE "Setup the system to cross compile to Stratify OS" O
 # This is currently NOT used with IS_ARM_CROSS_COMPILE=ON
 option(IS_BUILD_AND_TEST "Build and run the API tests" OFF)
 
-
 if(IS_ARM_CROSS_COMPILE)
   set(BOOTSTRAP_SCRIPT sos-bootstrap)
 else()
   set(BOOTSTRAP_SCRIPT bootstrap)
 endif()
-
 
 message(STATUS "Running ${BOOTSTRAP_SCRIPT} using SDK path: ${SDK_DIRECTORY}")
 
@@ -37,7 +35,13 @@ if(IS_BUILD_AND_TEST)
   set(BUILD_DIR_PATH ${CMAKE_CURRENT_SOURCE_DIR}/${BUILD_DIR})
 
   file(MAKE_DIRECTORY ${BUILD_DIR_PATH})
-  option(GENERATOR "Generator to use for building" Ninja)
+  option(IS_GENERATOR_MAKE "Generator to use for building" OFF)
+
+  if(${IS_GENERATOR_MAKE})
+    set(GENERATOR "Unix Makefiles")
+  else()
+    set(GENERATOR Ninja)
+  endif()
 
   execute_process(
     COMMAND cmake -DSDK_IS_TEST=ON .. -G${GENERATOR}

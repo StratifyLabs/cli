@@ -37,9 +37,10 @@ if(IS_BUILD_AND_TEST)
   set(BUILD_DIR_PATH ${CMAKE_CURRENT_SOURCE_DIR}/${BUILD_DIR})
 
   file(MAKE_DIRECTORY ${BUILD_DIR_PATH})
+  option(GENERATOR "Generator to use for building" Ninja)
 
   execute_process(
-    COMMAND cmake -DSDK_IS_TEST=ON .. -GNinja
+    COMMAND cmake -DSDK_IS_TEST=ON .. -G${GENERATOR}
     WORKING_DIRECTORY ${BUILD_DIR_PATH}
     RESULT_VARIABLE CMSDK_RESULT
   )

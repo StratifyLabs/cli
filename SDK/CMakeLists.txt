@@ -42,7 +42,7 @@ set(LWIP_STRATIFYOS_PATH
   ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/StratifyOS/include
   CACHE INTERNAL "LWIP StratifyOS INCLUDE PATHS")
 
-sdk_add_subdirectory(API main)
+sdk_add_subdirectory(API feature/cmsdk-port-v2.0)
 include(${BASE_DIRECTORY}/API/libraries/API.cmake)
 
 set(LWIP_CONFIG_PATH ${CMAKE_CURRENT_SOURCE_DIR}/config CACHE INTERNAL "LWIP config path")
@@ -56,10 +56,10 @@ if(CMSDK_IS_ARM)
   sdk_add_subdirectory(HalAPI main)
 endif()
 
-sdk_add_subdirectory(JsonAPI main)
-sdk_add_subdirectory(InetAPI main)
-sdk_add_subdirectory(CryptoAPI main)
-sdk_add_subdirectory(CloudAPI main)
+sdk_add_subdirectory(JsonAPI feature/cmsdk-port-v2.0)
+sdk_add_subdirectory(InetAPI feature/cmsdk-port-v2.0)
+sdk_add_subdirectory(CryptoAPI feature/cmsdk-port-v2.0)
+sdk_add_subdirectory(CloudAPI feature/cmsdk-port-v2.0)
 
 
 

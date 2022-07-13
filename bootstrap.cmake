@@ -17,13 +17,13 @@ option(IS_BUILD_AND_TEST "Build and run the API tests" OFF)
 
 
 if(IS_ARM_CROSS_COMPILE)
-  set(BOOTSTRAP_SCRIPT sos-bootstrap.cmake)
+  set(BOOTSTRAP_SCRIPT sos-bootstrap)
 else()
-  set(BOOTSTRAP_SCRIPT bootstrap.cmake)
+  set(BOOTSTRAP_SCRIPT bootstrap)
 endif()
 
 execute_process(
-  COMMAND cmake -DCMSDK_SDK_PATH=${SDK_DIRECTORY} -P ${DEPENDENCIES_DIRECTORY}/CMakeSDK/scripts/${BOOTSTRAP_SCRIPT}
+  COMMAND cmake -DCMSDK_SDK_PATH=${SDK_DIRECTORY} -P ${DEPENDENCIES_DIRECTORY}/CMakeSDK/scripts/${BOOTSTRAP_SCRIPT}.cmake
 )
 
 if(IS_BUILD_AND_TEST)

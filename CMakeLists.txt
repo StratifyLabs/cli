@@ -1,11 +1,11 @@
 cmake_minimum_required (VERSION 3.12)
 
 set(SDK_DIRECTORY ${CMAKE_SOURCE_DIR}/SDK)
-set(SOS_SDK_PATH ${SDK_DIRECTORY}/StratifyLabs-SDK)
+set(CMSDK_LOCAL_PATH ${SDK_DIRECTORY}/local)
 
-set(CMAKE_MODULE_PATH ${SOS_SDK_PATH}/cmake)
-set(CMAKE_TOOLCHAIN_FILE ${CMAKE_MODULE_PATH}/sos-toolchain.cmake)
-include(sos-sdk)
+set(CMAKE_MODULE_PATH ${CMSDK_LOCAL_PATH}/cmake)
+set(CMAKE_TOOLCHAIN_FILE ${CMAKE_MODULE_PATH}/cmsdk-toolchain.cmake)
+include(cmsdk)
 
 set(CLI_PROJECT_VERSION 0.1 CACHE INTERNAL "cli application version")
 project(cli
@@ -15,7 +15,7 @@ project(cli
 
 include(CTest)
 
-set(SOS_SDK_PULL_TARGET pull)
+set(CMSDK_PULL_TARGET pull)
 
 add_custom_target(pull
 	COMMAND git pull

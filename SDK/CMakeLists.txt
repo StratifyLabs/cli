@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.12)
 
 project(${PROJECT_NAME}-SDK)
 
-set(API_IS_SDK TRUE CACHE INTERNAL "Build SDK projects")
+set(API_IS_SDK TRUE CACHE INTERNAL "Build SDK projects as subprojects")
 
 set(BASE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/dependencies)
 file(MAKE_DIRECTORY ${BASE_DIRECTORY})
@@ -21,7 +21,7 @@ execute_process(
 )
 
 macro(sdk_add_subdirectory NAME BRANCH)
-  sos_sdk_git_clone_or_pull_branch(${BASE_DIRECTORY} ${NAME} https://github.com/StratifyLabs/${NAME}.git ${BRANCH})
+  cmsdk_git_clone_or_pull_branch(${BASE_DIRECTORY} ${NAME} https://github.com/StratifyLabs/${NAME}.git ${BRANCH})
   add_subdirectory(${BASE_DIRECTORY}/${NAME} ${NAME} EXCLUDE_FROM_ALL)
 endmacro()
 
@@ -50,7 +50,7 @@ set(MBEDTLS_CONFIG_FILE ${CMAKE_CURRENT_SOURCE_DIR}/config/mbedtls/config.h CACH
 
 add_subdirectory(dependencies/CMakeSDK CMakeSDK)
 
-if(SOS_IS_ARM)
+if(CMSDK_IS_ARM)
   sdk_add_subdirectory(StratifyOS main)
   sdk_add_subdirectory(SosAPI main)
   sdk_add_subdirectory(HalAPI main)

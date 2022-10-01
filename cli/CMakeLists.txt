@@ -1,41 +1,50 @@
 
 set(DEPENDENCIES
+  RapidFuzzAPI
   InetAPI
   TestAPI
-  SysAPI
   FsAPI
-  VarAPI
   ThreadAPI)
 
-set(LOCAL_NAME ${PROJECT_NAME})
+cmsdk2_app_add_executable(
+  TARGET RELEASE
+  NAME cli
+  CONFIG release
+  ARCH ${CMSDK_ARCH}
+  )
 
-cmsdk_add_subdirectory(PRIVATE_SOURCELIST ${CMAKE_CURRENT_SOURCE_DIR}/src)
-cmsdk_app_target(RELEASE ${LOCAL_NAME} "" release ${CMSDK_ARCH})
-add_executable(${RELEASE_TARGET})
-target_sources(${RELEASE_TARGET}
+cmsdk2_add_sources(
+  LIST PRIVATE_SOURCELIST
+  DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/src
+)
+
+target_sources(${RELEASE}
   PRIVATE
   ${PRIVATE_SOURCELIST}
   )
 
-target_compile_definitions(${RELEASE_TARGET}
+target_compile_definitions(${RELEASE}
   PRIVATE
   -DVERSION=\"${CMAKE_PROJECT_VERSION}\"
   )
 
-target_include_directories(${RELEASE_TARGET}
+target_include_directories(${RELEASE}
   PRIVATE
   ${CMAKE_CURRENT_SOURCE_DIR}/src
   )
 
-target_compile_options(${RELEASE_TARGET}
+target_compile_options(${RELEASE}
   PRIVATE
   -O3
   )
 
-set_property(TARGET ${RELEASE_TARGET} PROPERTY CXX_STANDARD 17)
+set_property(TARGET ${RELEASE} PROPERTY CXX_STANDARD 20)
 
-cmsdk_app_add_arch_targets("${RELEASE_OPTIONS}" "${DEPENDENCIES}" 0)
+cmsdk2_app_add_targets_for_architectures(
+  TARGET ${RELEASE}
+  OPTIONS ${RELEASE_OPTIONS}
+  DEPENDENCIES ${DEPENDENCIES})
 
 install(
-  PROGRAMS ${CMAKE_CURRENT_SOURCE_DIR}/build_release_link/${LOCAL_NAME}_release_link.elf${CMSDK_EXEC_SUFFIX}
-  DESTINATION ${CMSDK_PATH}/bin RENAME ${LOCAL_NAME}${CMSDK_EXEC_SUFFIX})
+  PROGRAMS ${CMAKE_CURRENT_SOURCE_DIR}/build_release_link/${PROJECT_NAME}_release_link${CMSDK_EXEC_SUFFIX}
+  DESTINATION ${CMSDK_PATH}/bin RENAME ${PROJECT_NAME}${CMSDK_EXEC_SUFFIX})

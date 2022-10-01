@@ -15,6 +15,8 @@ project(cli
 
 include(CTest)
 
+#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address -D__SANITIZE_THREAD__=0")
+
 set(CMSDK_PULL_TARGET pull)
 
 add_custom_target(pull

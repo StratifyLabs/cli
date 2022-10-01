@@ -10,7 +10,11 @@ file(MAKE_DIRECTORY ${BASE_DIRECTORY})
 message(STATUS "Base directory ${BASE_DIRECTORY}")
 
 macro(sdk_add_subdirectory NAME BRANCH)
-  cmsdk_git_clone_or_pull_branch(${BASE_DIRECTORY} ${NAME} https://github.com/StratifyLabs/${NAME}.git ${BRANCH})
+  cmsdk2_git_clone_or_pull_branch(
+    WORKING_DIRECTORY ${BASE_DIRECTORY}
+    NAME ${NAME}
+    REPOSITORY https://github.com/StratifyLabs/${NAME}.git
+    BRANCH ${BRANCH})
   add_subdirectory(${BASE_DIRECTORY}/${NAME} ${NAME} EXCLUDE_FROM_ALL)
 endmacro()
 
@@ -24,6 +28,8 @@ if(SDK_IS_TEST)
   set(INET_API_IS_TEST ON CACHE INTERNAL "Enable InetAPI Test")
   set(JSON_API_IS_TEST ON CACHE INTERNAL "Enable JsonAPI Test")
   set(CRYPTO_API_IS_TEST ON CACHE INTERNAL "Enable CryptoAPI Test")
+  set(REGEX_API_IS_TEST ON CACHE INTERNAL "Enable RegexAPI Test")
+  set(RAPID_FUZZ_API_IS_TEST ON CACHE INTERNAL "Enable RapidFuzzAPI Test")
 endif()
 
 set(SOS_CONFIG_PATH ${CMAKE_CURRENT_SOURCE_DIR}/config CACHE INTERNAL "StratifyOS config directory")
@@ -31,7 +37,7 @@ set(LWIP_STRATIFYOS_PATH
   ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/StratifyOS/include
   CACHE INTERNAL "LWIP StratifyOS INCLUDE PATHS")
 
-sdk_add_subdirectory(API v1.5)
+sdk_add_subdirectory(API main)
 include(${BASE_DIRECTORY}/API/libraries/API.cmake)
 
 set(LWIP_CONFIG_PATH ${CMAKE_CURRENT_SOURCE_DIR}/config CACHE INTERNAL "LWIP config path")
@@ -46,9 +52,11 @@ if(CMSDK_IS_ARM)
 endif()
 
 sdk_add_subdirectory(JsonAPI v1.4)
-sdk_add_subdirectory(InetAPI v1.4)
+sdk_add_subdirectory(InetAPI main)
 sdk_add_subdirectory(CryptoAPI v1.3)
 sdk_add_subdirectory(CloudAPI v1.2)
+sdk_add_subdirectory(RegexAPI main)
+sdk_add_subdirectory(RapidFuzzAPI main)
 
 
 

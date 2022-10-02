@@ -1,5 +1,4 @@
 set(DEPENDENCIES
-  RapidFuzzAPI
   InetAPI
   TestAPI
   FsAPI

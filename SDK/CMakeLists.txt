@@ -47,8 +47,6 @@ sdk_add_subdirectory(JsonAPI main)
 sdk_add_subdirectory(InetAPI main)
 sdk_add_subdirectory(CryptoAPI main)
 sdk_add_subdirectory(CloudAPI main)
-sdk_add_subdirectory(RegexAPI main)
-sdk_add_subdirectory(RapidFuzzAPI main)
 
 
 

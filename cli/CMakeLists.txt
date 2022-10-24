@@ -22,9 +22,8 @@ target_compile_options(${RELEASE}
   PRIVATE
   -O3)
 set_property(TARGET ${RELEASE} PROPERTY CXX_STANDARD 20)
-cmsdk2_app_add_targets_for_architectures(
+cmsdk2_app_add_dependencies(
   TARGET ${RELEASE}
-  OPTIONS ${RELEASE_OPTIONS}
   DEPENDENCIES ${DEPENDENCIES})
 install(
   PROGRAMS ${CMAKE_CURRENT_SOURCE_DIR}/build_release_link/${PROJECT_NAME}_release_link${CMSDK_EXEC_SUFFIX}

@@ -10,7 +10,6 @@ cmsdk2_add_executable(
   ARCH ${CMSDK_ARCH})
 cmsdk2_add_sources(
   TARGET ${RELEASE}
-  LIST PRIVATE_SOURCELIST
   DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/src)
 target_compile_definitions(${RELEASE}
   PRIVATE

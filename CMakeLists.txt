@@ -10,8 +10,7 @@ include(cmsdk)
 set(CLI_PROJECT_VERSION 0.1 CACHE INTERNAL "cli application version")
 project(cli
 	LANGUAGES CXX C
-	VERSION ${CLI_PROJECT_VERSION}
-	)
+	VERSION ${CLI_PROJECT_VERSION})
 
 include(CTest)
 
